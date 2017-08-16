@@ -218,7 +218,6 @@ class tc_template_master {
 		$find_post_id = $wpdb->get_var($wpdb->prepare("SELECT post_id FROM wp_favorites WHERE user_id =%d AND post_id = %d",$user_id,$post_id ));
 		return $find_post_id;
 		}
-		
 		//functions for tc presentation template
 		//get presentation simple links
 		function tc_tc_presentations_template_get_simple_links(){
@@ -609,12 +608,6 @@ class tc_template_master {
 		WHERE p.post_type = 'simple_link' AND p.id=f.post_id AND f.user_id = %d", $user_id, OBJECT));
 		return $resource_links;
 		}
-		//get assessment review template items
-		function tc_reviews_get_average_rating_per_post($id){
-		global $wpdb;
-		$average = $wpdb->get_var($wpdb->prepare("select AVG(meta_value) from wp_commentmeta  where comment_id in (Select comment_id from wp_comments where comment_post_id = %d) and meta_key= %s", $id,'crfp-rating'));
-		return $average;	
-		}
 		//get saved discussion items
 		function tc_favorites_get_discussion_items($user_id){
 		global $wpdb;
@@ -622,11 +615,11 @@ class tc_template_master {
 		wp_favorites f WHERE (p.post_type = 'forum' OR p.post_type = 'topic') AND p.id=f.post_id AND f.user_id = %d", $user_id, OBJECT));
 		return $discussion_links;
 		}
-        function	 tc_reviews_get_number_reviews_per_post($post_id){
-	    global $wpdb;
+               function	 tc_reviews_get_number_reviews_per_post($post_id){
+	        global $wpdb;
 		$num_reviews = $wpdb->get_var($wpdb->prepare("select meta_value from wp_postmeta where  meta_key = 'crfp-total-ratings' and post_id = %d", $post_id, OBJECT));
 		return $num_reviews;
-        }
+               }
 		function get_meta_value_by_key($post_id, $key){
 		global $wpdb;
 		$meta_value = $wpdb->get_var($wpdb->prepare("select meta_value from wp_postmeta where post_id =%d and meta_key='%s'", $post_id,$key, OBJECT));
